@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stagg EKG Pro Controller</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans min-h-screen">
+
+    <div class="max-w-2xl mx-auto p-4">
+        <!-- Header -->
+        <header class="mb-8 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-900">☕ Stagg EKG Pro</h1>
+            <div class="flex items-center gap-2">
+                <button onclick="fetchState()" id="refresh-btn" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full transition" title="Refresh State">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
+                </button>
+                <span id="connection-status" class="px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                    Disconnected
+                </span>
+            </div>
+        </header>
+
+        <!-- Scan & Connect Section -->
+        <div id="scan-section" class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Device Connection</h2>
+            <div class="flex gap-4 mb-4">
+                <button onclick="scanDevices()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                    Scan for Devices
+                </button>
+                <button onclick="disconnect()" id="disconnect-btn" class="hidden bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+                    Disconnect
+                </button>
+            </div>
+            
+            <div id="scan-results" class="space-y-2">
+                <!-- Device list will appear here -->
+            </div>
+            
+            <div id="loading-scan" class="hidden text-gray-500 italic mt-2">Scanning...</div>
+        </div>
+
+        <!-- Control Dashboard (Hidden until connected) -->
+        <div id="dashboard" class="hidden space-y-6">
+            
+            <!-- Temperature Control -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Target Temperature</h2>
+                <div class="flex flex-col items-center">
+                    <div class="text-6xl font-bold text-blue-600 mb-2">
+                        <span id="display-target-temp">--</span><span class="text-3xl text-gray-400">°C</span>
+                    </div>
+                    
+                    <input type="range" id="temp-slider" min="40" max="100" step="1" 
+                           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-6"
+                           oninput="updateTempDisplay(this.value)"
+                           onchange="setTemperature(this.value)">
+                    
+                    <div class="flex justify-between w-full px-2 text-sm text-gray-500">
+                        <span>40°C</span>
+                        <span>100°C</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Schedule</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Mode</label>
+                        <select id="schedule-mode" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            <option value="off">Off</option>
+                            <option value="once">Once</option>
+                            <option value="daily">Daily</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                        <div class="flex items-center justify-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200">
+                            <!-- Hour -->
+                            <div class="flex flex-col items-center">
+                                <button onclick="adjustTime('hour', 1)" class="text-gray-400 hover:text-blue-600 transition p-1 hover:bg-gray-200 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                                </button>
+                                <input type="text" id="sched-h" value="08" class="w-12 text-center font-mono text-2xl bg-transparent border-none focus:ring-0 p-0 text-gray-800" readonly>
+                                <button onclick="adjustTime('hour', -1)" class="text-gray-400 hover:text-blue-600 transition p-1 hover:bg-gray-200 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                            </div>
+                            <span class="text-2xl font-bold text-gray-300 pb-1">:</span>
+                            <!-- Minute -->
+                            <div class="flex flex-col items-center">
+                                <button onclick="adjustTime('min', 1)" class="text-gray-400 hover:text-blue-600 transition p-1 hover:bg-gray-200 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                                </button>
+                                <input type="text" id="sched-m" value="00" class="w-12 text-center font-mono text-2xl bg-transparent border-none focus:ring-0 p-0 text-gray-800" readonly>
+                                <button onclick="adjustTime('min', -1)" class="text-gray-400 hover:text-blue-600 transition p-1 hover:bg-gray-200 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Temp (°C)</label>
+                        <input type="number" id="schedule-temp" min="40" max="100" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div class="flex items-end flex-col">
+                        <button onclick="saveSchedule()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition">
+                            Save Schedule
+                        </button>
+                        <span id="schedule-status" class="text-xs text-green-600 font-semibold mt-1 opacity-0 transition-opacity duration-300">Saved!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Settings</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Hold Time (Minutes)</label>
+                        <div class="flex gap-2">
+                            <select id="hold-time" class="flex-1 border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                <option value="0">Off</option>
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                            </select>
+                            <button onclick="setHold()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+                                Set
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Device Info</label>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p>Altitude: <span id="info-altitude">--</span> m</p>
+                            <p>Language: <span id="info-language">--</span></p>
+                            <p>Clock: <span id="info-clock">--:--</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

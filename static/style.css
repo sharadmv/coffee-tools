@@ -1,0 +1,4 @@
+/* Custom tweaks */
+.slider-thumb::-webkit-slider-thumb {
+    @apply appearance-none w-6 h-6 rounded-full bg-blue-600 cursor-pointer;
+}
