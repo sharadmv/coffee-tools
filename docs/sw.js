@@ -1,8 +1,10 @@
-const CACHE_NAME = 'stagg-ekg-v1';
+const CACHE_NAME = 'stagg-ekg-v2';
 const ASSETS = [
     './index.html',
     './icon.svg',
-    './manifest.json'
+    './manifest.json',
+    './style.css',
+    './app.js'
 ];
 
 self.addEventListener('install', (e) => {
