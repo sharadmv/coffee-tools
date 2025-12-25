@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Coffee, Mic, MicOff, Settings, MessageSquare, History, List, Book, Trash2 } from 'lucide-react';
 import { useGeminiLive } from './hooks/useGeminiLive';
 import LiveVisualizer from './components/LiveVisualizer';
@@ -89,7 +91,9 @@ function App() {
               ) : (
                 transcript.slice(-3).map((text, i) => (
                   <div key={i} className="bg-[#2a1f1b]/30 p-4 rounded-2xl border border-amber-900/10 text-sm animate-in fade-in slide-in-from-bottom-2">
-                    <p className="text-amber-100 leading-relaxed opacity-80">{text}</p>
+                    <div className="prose prose-invert prose-amber prose-sm max-w-none opacity-80">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
+                    </div>
                   </div>
                 ))
               )}
