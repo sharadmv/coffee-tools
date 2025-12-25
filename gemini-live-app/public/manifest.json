@@ -1,17 +1,32 @@
 {
   "name": "Coffee Assistant",
-  "short_name": "BrewLog",
-  "description": "Your AI Barista Companion",
-  "start_url": "./",
+  "short_name": "Coffee",
+  "description": "Interactive brewing assistant powered by Gemini Live",
+  "id": "/coffee_assistant/",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#1a1310",
   "theme_color": "#1a1310",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
-  ],
+  ]
 }
