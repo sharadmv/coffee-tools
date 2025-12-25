@@ -1,0 +1,17 @@
+{
+  "name": "Coffee Assistant",
+  "short_name": "BrewLog",
+  "description": "Your AI Barista Companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1310",
+  "theme_color": "#1a1310",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/924/924514.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
