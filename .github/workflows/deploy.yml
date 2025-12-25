@@ -26,15 +26,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: gemini-live-app/package-lock.json
+          cache-dependency-path: coffee-assistant-app/package-lock.json
 
       - name: Install dependencies
         run: npm install
-        working-directory: gemini-live-app
+        working-directory: coffee-assistant-app
 
       - name: Build Gemini App
         run: npm run build
-        working-directory: gemini-live-app
+        working-directory: coffee-assistant-app
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -47,7 +47,7 @@ jobs:
           mkdir -p _site/stagg
           cp -r stagg-app/* _site/stagg/
           mkdir -p _site/coffee_assistant
-          cp -r gemini-live-app/dist/* _site/coffee_assistant/
+          cp -r coffee-assistant-app/dist/* _site/coffee_assistant/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

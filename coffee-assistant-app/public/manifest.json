@@ -1,6 +1,6 @@
 {
   "name": "Coffee Assistant",
-  "short_name": "Coffee",
+  "short_name": "Coffee Assistant",
   "description": "Interactive brewing assistant powered by Gemini Live",
   "start_url": "./index.html",
   "display": "standalone",
