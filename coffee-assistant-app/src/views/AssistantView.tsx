@@ -1,8 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import BrewDraft from '../components/BrewDraft';
-import { Card } from '../components/ui/Card';
-import { MessageSquare, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import type { BrewAttempt, Bean } from '../types/gemini';
 import LiveVisualizer from '../components/LiveVisualizer';
 
