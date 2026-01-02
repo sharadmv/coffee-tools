@@ -20,6 +20,7 @@ export default function App() {
 
     const [isConnecting, setIsConnecting] = useState(false);
     const [showDebug, setShowDebug] = useState(false);
+    const [isScheduling, setIsScheduling] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleConnect = async () => {
@@ -53,7 +54,7 @@ export default function App() {
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 mb-4">
                             <Thermometer className="w-8 h-8 text-white" />
                         </div>
-                        <h1 className="text-3xl font-black tracking-tight text-white">STAGG EKG</h1>
+                        <h1 className="text-3xl font-black tracking-tight text-white uppercase italic">Coffee Tools</h1>
                         <p className="text-zinc-500 font-medium">Precision Kettle Controller</p>
                     </div>
 
@@ -67,11 +68,11 @@ export default function App() {
                         <Button 
                             onClick={handleConnect} 
                             disabled={isConnecting}
-                            className="w-full h-16 rounded-2xl text-lg font-bold bg-white text-black hover:bg-zinc-200 transition-all active:scale-95"
+                            className="w-full h-16 rounded-2xl text-lg font-bold"
                         >
                             {isConnecting ? (
                                 <div className="flex items-center gap-3">
-                                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                                     Connecting...
                                 </div>
                             ) : "Connect Kettle"}
@@ -95,7 +96,7 @@ export default function App() {
         <div className="min-h-screen bg-zinc-950 text-zinc-100 p-4 pb-12 font-sans selection:bg-white selection:text-black">
             <header className="flex items-center justify-between mb-8 px-2 pt-4">
                 <div>
-                    <h1 className="text-xl font-black tracking-tight text-white">STAGG EKG</h1>
+                    <h1 className="text-xl font-black tracking-tight text-white uppercase italic">Coffee Tools</h1>
                     <div className="flex items-center gap-2 mt-1">
                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                         <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Connected</span>
@@ -145,7 +146,7 @@ export default function App() {
                     </button>
                     
                     <button 
-                        onClick={() => {}} 
+                        onClick={() => setIsScheduling(true)} 
                         className="flex flex-col items-start p-6 bg-zinc-900 border border-zinc-800 text-white rounded-[2rem] font-bold transition-all active:scale-95 group"
                     >
                         <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-colors">
@@ -196,6 +197,86 @@ export default function App() {
             </main>
 
             {showDebug && <DebugOverlay logs={logs} isDebugMode={isDebugMode} setIsDebugMode={setIsDebugMode} onClear={clearLogs} onClose={() => setShowDebug(false)} />}
+            {isScheduling && <ScheduleModal state={state} onSave={setSchedule} onClose={() => setIsScheduling(false)} />}
+        </div>
+    );
+}
+
+function ScheduleModal({ state, onSave, onClose }: any) {
+    const [mode, setMode] = useState<'off' | 'once' | 'daily'>(state.schedule.mode);
+    const [temp, setTemp] = useState(state.schedule.temperature_celsius || state.target_temperature);
+    const [time, setTime] = useState(`${String(state.schedule.hour).padStart(2,'0')}:${String(state.schedule.minute).padStart(2,'0')}`);
+
+    const handleSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const [h, m] = time.split(':').map(Number);
+        await onSave(mode, h, m, temp);
+        onClose();
+    };
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-zinc-900 w-full max-w-sm rounded-[2.5rem] border border-zinc-800 p-8 shadow-2xl relative animate-in zoom-in-95 duration-200">
+                <button
+                    onClick={onClose}
+                    className="absolute top-6 right-6 p-2 rounded-full bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+                
+                <div className="flex items-center gap-3 mb-8">
+                    <div className="w-10 h-10 rounded-2xl bg-zinc-800 flex items-center justify-center">
+                        <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    <h2 className="text-xl font-black text-white uppercase tracking-tight">Set Schedule</h2>
+                </div>
+
+                <form onSubmit={handleSave} className="space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-1">Mode</label>
+                        <div className="grid grid-cols-3 gap-2 bg-zinc-950 p-1.5 rounded-2xl border border-zinc-800">
+                            {['off', 'once', 'daily'].map((m) => (
+                                <button
+                                    key={m}
+                                    type="button"
+                                    onClick={() => setMode(m as any)}
+                                    className={`py-2 px-1 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${
+                                        mode === m ? 'bg-zinc-800 text-white shadow-lg' : 'text-zinc-500 hover:text-zinc-300'
+                                    }`}
+                                >
+                                    {m}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-1">Time</label>
+                            <input
+                                type="time"
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-white font-black focus:ring-2 focus:ring-white/10 outline-none"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-1">Temp (°C)</label>
+                            <input
+                                type="number"
+                                step="0.5"
+                                value={temp}
+                                onChange={(e) => setTemp(parseFloat(e.target.value))}
+                                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl p-4 text-white font-black focus:ring-2 focus:ring-white/10 outline-none"
+                            />
+                        </div>
+                    </div>
+
+                    <Button type="submit" className="w-full h-14 rounded-2xl text-sm font-black uppercase tracking-widest mt-4">
+                        Save Schedule
+                    </Button>
+                </form>
+            </div>
         </div>
     );
 }
