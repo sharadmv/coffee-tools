@@ -1,7 +1,7 @@
 {
   "name": "Stagg EKG Controller",
   "short_name": "Stagg EKG",
-  "description": "Web Bluetooth controller for Fellow Stagg EKG Pro",
+  "description": "Web Bluetooth controller for Stagg EKG Pro",
   "start_url": "/coffee-tools/stagg.html",
   "display": "standalone",
   "background_color": "#09090b",

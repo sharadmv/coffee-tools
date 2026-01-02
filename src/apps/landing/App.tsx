@@ -9,7 +9,7 @@ export default function App() {
                     <div className="inline-flex items-center justify-center w-20 h-20 rounded-[2.5rem] bg-zinc-900 border border-zinc-800 mb-2 shadow-2xl">
                         <Coffee className="w-10 h-10 text-white" />
                     </div>
-                    <h1 className="text-5xl font-black tracking-tighter text-white uppercase italic">Fellow Coffee Tools</h1>
+                    <h1 className="text-5xl font-black tracking-tighter text-white uppercase italic">Coffee Tools</h1>
                     <p className="text-zinc-500 font-semibold uppercase tracking-widest text-sm">Select an application to begin</p>
                 </header>
 
