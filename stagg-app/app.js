@@ -363,12 +363,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Debug UI Event Listeners
     if (els.debugBtn && els.debugOverlay) {
         els.debugBtn.addEventListener('click', () => {
+            console.log('UI Action: Opening debug overlay');
             els.debugOverlay.classList.remove('hidden');
         });
     }
 
     if (els.closeDebugBtn && els.debugOverlay) {
         els.closeDebugBtn.addEventListener('click', () => {
+            console.log('UI Action: Closing debug overlay');
             els.debugOverlay.classList.add('hidden');
         });
     }
