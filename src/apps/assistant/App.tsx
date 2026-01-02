@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useGeminiLive } from './hooks/useGeminiLive';
-import { Layout } from './components/Layout';
-import { AssistantView } from './views/AssistantView';
-import { BeansView } from './views/BeansView';
-import { HistoryView } from './views/HistoryView';
-import { SettingsView } from './views/SettingsView';
-import type { BrewAttempt, Bean } from './types/gemini';
+import { useGeminiLive } from '../../hooks/useGeminiLive';
+import { Layout } from '../../components/Layout';
+import { AssistantView } from '../../views/AssistantView';
+import { BeansView } from '../../views/BeansView';
+import { HistoryView } from '../../views/HistoryView';
+import { SettingsView } from '../../views/SettingsView';
+import type { BrewAttempt, Bean } from '../../types/gemini';
 
 type Tab = 'assistant' | 'history' | 'beans' | 'settings';
 
@@ -240,8 +240,8 @@ function App() {
 }
 
 // Helper component to keep App.tsx clean
-import { Input as UIInput, Select as UISelect, TextArea as UITextArea } from './components/ui/Input';
-import { Button } from './components/ui/Button';
+import { Input as UIInput, Select as UISelect, TextArea as UITextArea } from '../../components/ui/Input';
+import { Button } from '../../components/ui/Button';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function DraftEditForm({ draftBrew, beans }: any) {
