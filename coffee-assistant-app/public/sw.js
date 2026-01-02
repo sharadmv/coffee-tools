@@ -1,10 +1,8 @@
-const CACHE_NAME = 'stagg-ekg-v8';
+const CACHE_NAME = 'coffee-assistant-v4';
 const ASSETS = [
     './index.html',
-    './icon-v2.svg',
-    './manifest.json',
-    './style.css',
-    './app.js'
+    './favicon.svg',
+    './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {

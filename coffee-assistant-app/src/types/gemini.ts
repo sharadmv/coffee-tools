@@ -48,6 +48,8 @@ export interface BrewAttempt {
   date: string;
   brewer: string;
   beanId: string;
+  grinder?: string;
+  grinderSetting?: string;
   ratio: string;
   waterTemp: number;
   technique: string;

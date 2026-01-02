@@ -69,6 +69,8 @@ function App() {
     const formData = new FormData(e.currentTarget);
     const updates = {
       brewer: formData.get('brewer') as string,
+      grinder: formData.get('grinder') as string,
+      grinderSetting: formData.get('grinderSetting') as string,
       ratio: formData.get('ratio') as string,
       waterTemp: Number(formData.get('waterTemp')) || undefined,
       beanId: formData.get('beanId') as string,
@@ -88,6 +90,8 @@ function App() {
       ...editingHistoryLog,
       brewer: formData.get('brewer') as string,
       beanId: formData.get('beanId') as string,
+      grinder: formData.get('grinder') as string,
+      grinderSetting: formData.get('grinderSetting') as string,
       ratio: formData.get('ratio') as string,
       waterTemp: Number(formData.get('waterTemp')) || 0,
       technique: formData.get('technique') as string,
@@ -128,6 +132,8 @@ function App() {
       date: new Date().toISOString().split('T')[0],
       brewer: '',
       beanId: '',
+      grinder: '',
+      grinderSetting: '',
       ratio: '',
       waterTemp: 0,
       technique: '',
@@ -246,6 +252,18 @@ function DraftEditForm({ draftBrew, beans }: any) {
                 name="brewer"
                 defaultValue={draftBrew?.brewer || ''}
             />
+             <div className="grid grid-cols-2 gap-3">
+                 <UIInput
+                    label="Grinder"
+                    name="grinder"
+                    defaultValue={draftBrew?.grinder || ''}
+                  />
+                 <UIInput
+                    label="Setting"
+                    name="grinderSetting"
+                    defaultValue={draftBrew?.grinderSetting || ''}
+                  />
+            </div>
             <UISelect
                 label="Bean"
                 name="beanId"

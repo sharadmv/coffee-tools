@@ -59,7 +59,7 @@ export function HistoryView({ logs, beans, onDelete, onEdit, editingLog, setEdit
                             )}
                         </div>
                         <h3 className="font-bold text-lg text-white">{getBeanName(log.beanId)}</h3>
-                        <p className="text-sm text-text-muted font-medium">{log.brewer}</p>
+                        <p className="text-sm text-text-muted font-medium">{log.brewer} {log.grinder ? `• ${log.grinder} (${log.grinderSetting})` : ''}</p>
                     </div>
                     <div className="flex gap-1 absolute top-4 right-4 bg-app-card/80 backdrop-blur-sm rounded-xl p-1 shadow-xl border border-white/5">
                         <Button variant="ghost" size="sm" onClick={() => onEdit(log)} icon={<Pencil className="w-3 h-3" />} />
@@ -112,6 +112,18 @@ export function HistoryView({ logs, beans, onDelete, onEdit, editingLog, setEdit
               name="brewer"
               defaultValue={editingLog?.brewer || ''}
             />
+          <div className="grid grid-cols-2 gap-3">
+             <Input
+                label="Grinder"
+                name="grinder"
+                defaultValue={editingLog?.grinder || ''}
+              />
+             <Input
+                label="Setting"
+                name="grinderSetting"
+                defaultValue={editingLog?.grinderSetting || ''}
+              />
+          </div>
           <Select
               label="Bean"
               name="beanId"

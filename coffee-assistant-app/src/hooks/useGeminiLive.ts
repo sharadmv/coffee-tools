@@ -184,7 +184,7 @@ export function useGeminiLive(onDataUpdated?: () => void) {
               }
             },
             system_instruction: {
-              parts: [{ text: "You are an expert Coffee Assistant. START THE SESSION by greeting the user and asking which beans from their library they are using for their brew today. 1. When a bean is mentioned, call 'get_saved_beans' first. 2. If no match, ask to add new or clarify. 3. Interactively gather the rest of the brew info (brewer, ratio, temp, method, enjoyment). 4. Use 'update_brew_draft' continuously. 5. Never read out IDs. 6. Use 'finish_conversation' when the user is done or says goodbye." }]
+              parts: [{ text: "You are an expert Coffee Assistant. START THE SESSION by greeting the user and asking which beans from their library they are using for their brew today. 1. When a bean is mentioned, call 'get_saved_beans' first. 2. If no match, ask to add new or clarify. 3. Interactively gather the rest of the brew info (brewer, grinder name, grinder setting, ratio, temp, method, enjoyment). 4. Use 'update_brew_draft' continuously. 5. Never read out IDs. 6. Use 'finish_conversation' when the user is done or says goodbye." }]
             },
             tools: [{ 'google_search': {} }, {
               functionDeclarations: [
@@ -240,6 +240,8 @@ export function useGeminiLive(onDataUpdated?: () => void) {
                     properties: {
                       brewer: { type: "string" },
                       beanId: { type: "string" },
+                      grinder: { type: "string" },
+                      grinderSetting: { type: "string" },
                       ratio: { type: "string" },
                       waterTemp: { type: "number" },
                       technique: { type: "string" },
@@ -256,13 +258,15 @@ export function useGeminiLive(onDataUpdated?: () => void) {
                     properties: {
                       brewer: { type: "string" },
                       beanId: { type: "string" },
+                      grinder: { type: "string" },
+                      grinderSetting: { type: "string" },
                       ratio: { type: "string" },
                       waterTemp: { type: "number" },
                       technique: { type: "string" },
                       extraction: { type: "number" },
                       enjoyment: { type: "number" }
                     },
-                    required: ["brewer", "beanId", "ratio", "waterTemp", "technique", "enjoyment"]
+                    required: ["brewer", "beanId", "ratio", "waterTemp", "technique", "enjoyment", "grinder", "grinderSetting"]
                   }
                 }
               ]

@@ -106,6 +106,21 @@ const BrewDraft: React.FC<BrewDraftProps> = ({ draft, draftBean, beans, onEdit }
           {draft.brewer && <CheckCircle2 className="w-6 h-6 text-emerald-500" />}
         </div>
 
+        {(draft.grinder || draft.grinderSetting) && (
+          <div className="bg-black/30 rounded-2xl p-5 border border-amber-900/30 flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-amber-600">
+               <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 17a1 1 0 0 1 2 0c.5 4 1.5 4.5 3 4.5s2.5-.5 3-4.5a1 1 0 0 1 2 0c0 4.5-1.5 6-5 6s-5-1.5-5-6Z"/><path d="M18 5v5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z"/><path d="M15 17c0-3-3-3-3-3s-3 0-3 3"/><path d="M12 12v2"/></svg>
+            </div>
+            <div className="flex-1">
+              <p className="text-[10px] text-amber-600 font-black uppercase tracking-widest">Grinder</p>
+              <p className="text-xl font-black text-white">
+                {draft.grinder || '...'} <span className="text-amber-600/60 font-medium">({draft.grinderSetting || '--'})</span>
+              </p>
+            </div>
+            {draft.grinder && draft.grinderSetting && <CheckCircle2 className="w-6 h-6 text-emerald-500" />}
+          </div>
+        )}
+
         <div className="bg-black/30 rounded-2xl p-5 border border-amber-900/30">
           <div className="flex items-center justify-between mb-2">
             <p className="text-[10px] text-amber-600 font-black uppercase tracking-widest">Selected Bean</p>

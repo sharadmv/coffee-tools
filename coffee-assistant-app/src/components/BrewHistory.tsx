@@ -88,6 +88,16 @@ const BrewHistory: React.FC<BrewHistoryProps> = ({ logs, beans, onDelete, onEdit
                 </div>
               </div>
 
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-amber-900/20 rounded-md">
+                   <svg className="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 17a1 1 0 0 1 2 0c.5 4 1.5 4.5 3 4.5s2.5-.5 3-4.5a1 1 0 0 1 2 0c0 4.5-1.5 6-5 6s-5-1.5-5-6Z"/><path d="M18 5v5a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2Z"/><path d="M15 17c0-3-3-3-3-3s-3 0-3 3"/><path d="M12 12v2"/></svg>
+                </div>
+                <div>
+                  <p className="text-[10px] text-stone-500 uppercase font-bold">Grinder</p>
+                  <p className="text-xs text-amber-100 font-medium line-clamp-1">{log.grinder || '--'} ({log.grinderSetting || '--'})</p>
+                </div>
+              </div>
+
               {log.extraction && (
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 bg-amber-900/20 rounded-md"><Gauge className="w-3.5 h-3.5 text-amber-500" /></div>
