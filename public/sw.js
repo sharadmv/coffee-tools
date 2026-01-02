@@ -1,6 +1,6 @@
 const CACHE_NAME = 'coffee-assistant-v4';
 const ASSETS = [
-    './index.html',
+    './assistant.html',
     './favicon.svg',
     './manifest.json'
 ];

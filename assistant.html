@@ -8,14 +8,22 @@
     <meta name="theme-color" content="#1a1310" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Coffee Tools" />
+    <meta name="apple-mobile-web-app-title" content="Coffee Assistant" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    <title>Fellow Coffee Tools</title>
+    <link rel="manifest" href="manifest.json" />
+    <title>Coffee Assistant</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/apps/landing/main.tsx"></script>
+    <script type="module" src="/src/apps/assistant/assistant-main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

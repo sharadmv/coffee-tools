@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         stagg: resolve(__dirname, 'stagg.html'),
+        assistant: resolve(__dirname, 'assistant.html'),
       },
     },
   },

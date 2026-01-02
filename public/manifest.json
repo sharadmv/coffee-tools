@@ -2,7 +2,7 @@
   "name": "Coffee Assistant",
   "short_name": "Coffee Assistant",
   "description": "Interactive brewing assistant powered by Gemini Live",
-  "start_url": "/coffee-tools/index.html",
+  "start_url": "/coffee-tools/assistant.html",
   "display": "standalone",
   "background_color": "#1a1310",
   "theme_color": "#1a1310",
