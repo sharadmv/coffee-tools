@@ -26,31 +26,21 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          cache-dependency-path: coffee-assistant-app/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm install
-        working-directory: coffee-assistant-app
 
-      - name: Build Gemini App
+      - name: Build Unified App
         run: npm run build
-        working-directory: coffee-assistant-app
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Assemble Site
-        run: |
-          mkdir -p _site
-          touch _site/.nojekyll
-          cp landing/index.html _site/
-          mkdir -p _site/stagg
-          cp -r stagg-app/* _site/stagg/
-          mkdir -p _site/coffee_assistant
-          cp -r coffee-assistant-app/dist/* _site/coffee_assistant/
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
 
   deploy:
     environment:

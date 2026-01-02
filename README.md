@@ -6,8 +6,8 @@ A unified suite of coffee-related tools built with React, TypeScript, and Vite.
 
 This repository contains multiple PWAs (Progressive Web Apps) built from the same codebase:
 
-- **Coffee Assistant**: An interactive brewing assistant powered by Gemini Live. (Served at `/index.html`)
-- **Stagg EKG Controller**: A Web Bluetooth controller for the Fellow Stagg EKG Pro kettle. (Served at `/stagg.html`)
+- **Coffee Assistant**: An interactive brewing assistant powered by Gemini Live. (Served at `/coffee-tools/index.html`)
+- **Stagg EKG Controller**: A Web Bluetooth controller for the Fellow Stagg EKG Pro kettle. (Served at `/coffee-tools/stagg.html`)
 
 ## Development
 
